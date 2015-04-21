@@ -44,16 +44,3 @@ The program then outputs the number of days until the user's birthday
 
 > Awesome! Your birtheday is in 45 days! Happy Birthday in advance
 
-When given the input of "Abby".
-
-Note: the "a" vs. "an"
-
-## Part 2
-
-Add on to part 1! Follow up on the cheer above by asking:
-
-Hey, Abby, what’s your birthday?
-And, replying based on the output with a notification of how many days away their birthday is:
-
-Awesome! Your birthday is in 45 days! Happy Birthday in advance!
-You’re going to have to use the Ruby Docs.
