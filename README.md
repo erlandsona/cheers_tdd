@@ -16,10 +16,10 @@ The user types in their name, for example:
 
 The program outputs a cheer in the folowing format:
 
-> Give me an... A
-> Give me a... B
-> Give me a... B
-> Give me a... Y
+> Give me an... A\n
+> Give me a... B\n
+> Give me a... B\n
+> Give me a... Y\n
 > ABBY’s just GRAND!
 
 * Follow the proper grammatical rules for 'a' and 'and'. The rule is based on whether the spelling of a letter would begin with a vowel.
