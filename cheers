@@ -6,12 +6,13 @@ I'd cheer for you, if only I knew who you were :(
 Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
 else
-  name = ARGV[0]
-  name.each_char do |char|
-    article = "n" if char == "A"
-    puts "Give me a#{article}... #{char.upcase}"
+  original_name = ARGV[0]
+  cheerable_name = original_name.upcase.gsub(/\W/, "")
+  cheerable_name.each_char do |char|
+    article = "n" if "HALFNORSEMIX".include?(char)
+    puts "Give me a#{article}... #{char}"
   end
-  puts "#{name}’s just GRAND!"
+  puts "#{original_name}’s just GRAND!"
   puts ""
   puts "I would wish you a Happy Birthday, if I knew when that was!"
 end
