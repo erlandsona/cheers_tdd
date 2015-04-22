@@ -22,4 +22,12 @@ cheerable_name.each_char do |char|
 end
 puts "#{original_name}’s just GRAND!"
 puts ""
-puts "I would wish you a Happy Birthday, if I knew when that was!"
+
+birthday = ARGV[1]
+
+unless birthday
+  puts "I would wish you a Happy Birthday, if I knew when that was!"
+  exit
+end
+
+puts "Awesome! Your birthday is in 127 days! Happy Birthday in advance!"
