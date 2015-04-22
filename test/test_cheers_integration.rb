@@ -25,6 +25,20 @@ EOS
     assert_equal expected, output
   end
 
+  def test_one_valid_argument
+    output = `./cheers Abby`
+    expected = <<EOS
+Give me an... A
+Give me a... B
+Give me a... B
+Give me a... Y
+Abby’s just GRAND!
+
+I would wish you a Happy Birthday, if I knew when that was!
+EOS
+    assert_equal expected, output
+  end
+
   def test_one_valid_argument_with_hyphenated_name
     output = `./cheers Mary-Jane`
     expected = <<EOS
@@ -65,7 +79,7 @@ EOS
     output = `./cheers 08/25`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
-Try again with `./cheers.rb [Name] [MM/DD Birthday]
+Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
@@ -74,7 +88,7 @@ EOS
     output = `./cheers *!?`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
-Try again with `./cheers.rb [Name] [MM/DD Birthday]
+Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
@@ -83,7 +97,7 @@ EOS
     output = `./cheers ""`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
-Try again with `./cheers.rb [Name] [MM/DD Birthday]
+Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
@@ -92,7 +106,7 @@ EOS
     output = `./cheers "  "`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
-Try again with `./cheers.rb [Name] [MM/DD Birthday]
+Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
