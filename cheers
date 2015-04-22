@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require "unicode_utils"
+
+arguments = ARGV
+name = arguments[0]
+
+an_letters = "aàáâäæãåeèéêëfhiîïíìlmnoøôöõóòrsx"
+unicode_letter = /\p{l}/
+special_chars = /[^-.'\s\p{l}]/
+
+for_edgecases = /(\P{l}|Jr\.|Sr\.|jr\.|sr\.|SR\.|JR\.|\sI|\WII|I{3})/
+
+unless name
+  puts <<EOS
+I'd cheer for you, if only I knew who you were :(
+Try again with `./cheers [Name] [MM/DD Birthday]`
+EOS
+end
+if name[special_chars]
+  puts <<EOS
+I'd cheer for you, if only I knew your real name :(
+Try again with `./cheers [Name] [MM/DD Birthday]`
+Remember to try and avoid typing any special characters
+EOS
+else
+  unless name[for_edgecases]
+    name.each_char do |letr|
+      if letr[unicode_letter]
+        article = an_letters.include?(UnicodeUtils.downcase(letr)) ? "an" : "a "
+        puts "Give me #{article}... #{UnicodeUtils.upcase(letr)}!"
+      end
+    end
+    puts "#{UnicodeUtils.titlecase(name)} is just GRAND!"
+  else
+    puts "Please type in a proper Roman Numeral:) Thanks!"
+  end
+end
