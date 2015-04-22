@@ -2,100 +2,120 @@ require_relative 'helper'
 
 class TestCheersIntegration < Minitest::Test
 
-  def test_1_0_zero_args_returns_help_message
+  def test_zero_arguments_prints_help_message
     output = `./cheers`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
-Try again with `./cheers [Name] [MM/DD Birthday]`
+Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
 
-  def test_1_1_valid_arg
+  def test_one_valid_argument
     output = `./cheers Abby`
     expected = <<EOS
-Give me an... A!
-Give me a ... B!
-Give me a ... B!
-Give me a ... Y!
-Abby is just GRAND!
+Give me an... A
+Give me a... B
+Give me a... B
+Give me a... Y
+Abby’s just GRAND!
+
+I would wish you a Happy Birthday, if I knew when that was!
 EOS
     assert_equal expected, output
   end
 
-  def test_1_2_valid_with_hyphen_double_name
-    output = `./cheers Abby-Dawn`
+  def test_one_valid_argument_with_hyphenated_name
+    output = `./cheers Mary-Jane`
     expected = <<EOS
-Give me an... A!
-Give me a ... B!
-Give me a ... B!
-Give me a ... Y!
-Give me a ... D!
-Give me an... A!
-Give me a ... W!
-Give me an... N!
-Abby-Dawn is just GRAND!
+Give me an... M
+Give me an... A
+Give me an... R
+Give me a... Y
+Give me a... J
+Give me an... A
+Give me an... N
+Give me an... E
+Mary-Jane’s just GRAND!
+
+I would wish you a Happy Birthday, if I knew when that was!
 EOS
     assert_equal expected, output
   end
 
-  def test_1_3_valid_with_special_characters
-    output = `./cheers Bênção`
+  def test_one_valid_argument_with_double_name
+    output = `./cheers "Mary Jane"`
     expected = <<EOS
-Give me a ... B!
-Give me an... Ê!
-Give me an... N!
-Give me a ... Ç!
-Give me an... Ã!
-Give me an... O!
-Bênção is just GRAND!
+Give me an... M
+Give me an... A
+Give me an... R
+Give me a... Y
+Give me a... J
+Give me an... A
+Give me an... N
+Give me an... E
+Mary Jane’s just GRAND!
+
+I would wish you a Happy Birthday, if I knew when that was!
 EOS
     assert_equal expected, output
   end
 
-  def test_1_4_args_contain_wierd_characters
-    output = `./cheers 2736jka@#!%`
+  def test_birthday_instead_of_name
+    output = `./cheers 08/25`
     expected = <<EOS
-I'd cheer for you, if only I knew your real name :(
-Try again with `./cheers [Name] [MM/DD Birthday]`
-Remember to try and avoid typing any special characters
+I'd cheer for you, if only I knew who you were :(
+Try again with `./cheers.rb [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
 
-# This will break our program and there's not a good way to make this work either:/
-
-  def test_1_5_name_includes_proper_roman_numeral
-    output = `./cheers "Bob White Sr. III"`
+  def test_only_non_word_characters_in_name
+    output = `./cheers *!?`
     expected = <<EOS
-Give me a ... B!
-Give me an... O!
-Give me a ... B!
-Give me a ... W!
-Give me an... H!
-Give me a ... W!
-Give me an... H!
-Give me an... I!
-Give me a ... T!
-Give me an... E!
+I'd cheer for you, if only I knew who you were :(
+Try again with `./cheers.rb [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
 
-  def test_1_6_name_includes_improper_roman_numeral
-    output = `./cheers "Bob White Sr. IIII"`
+  def test_no_characters_in_name
+    output = `./cheers ""`
     expected = <<EOS
-Please type in a proper Roman Numeral:) Thanks!
+I'd cheer for you, if only I knew who you were :(
+Try again with `./cheers.rb [Name] [MM/DD Birthday]
+EOS
+    assert_equal expected, output
+  end
+
+  def test_only_whitespace_in_name
+    output = `./cheers "  "`
+    expected = <<EOS
+I'd cheer for you, if only I knew who you were :(
+Try again with `./cheers.rb [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end
 
   # Scenarios discussed in class:
-  # 0 args -> help message √
-  # 1 valid arg √
-  # 1 invalid arg √
-  # 2 args √
-  #   * valid + valid √
+  # 1 valid arg
+  # 1 invalid arg
+  # 2 args
+  #   * valid + valid
+  def test_two_valid_arguments
+    skip
+    output = `./cheers Abby 08/25`
+    expected = <<EOS
+Give me an... A
+Give me a... B
+Give me a... B
+Give me a... Y
+Abby’s just GRAND!
+
+Awesome!  Your birthday is in 127 days! Happy Birthday in advance!
+EOS
+    assert_equal expected, output
+  end
   #   * valid + invalid
   #   * invalid + valid
   #   * invalid + invalid
