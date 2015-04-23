@@ -105,7 +105,10 @@ EOS
 # 2 args
 #   * valid + valid
   def test_two_valid_arguments
-    output = `./cheers Abby 08/25`
+    time_now = Time.now
+    birthday = Time.new(time_now.year, 7, 21)
+    difference = birthday.strftime('%j').to_i - time_now.strftime('%j').to_i
+    output = `./cheers Abby 07/21`
     expected = <<EOS
 Give me an... A
 Give me a... B
@@ -113,13 +116,16 @@ Give me a... B
 Give me a... Y
 Abby’s just GRAND!
 
-Awesome! Your birthday is in 127 days! Happy Birthday in advance!
+Awesome! Your birthday is in #{difference} days! Happy Birthday in advance!
 EOS
     assert_equal expected, output
   end
 
   def test_two_valid_arguments_alternate_date_format
-    output = `./cheers Abby 8/25`
+    time_now = Time.now
+    birthday = Time.new(time_now.year, 7, 21)
+    difference = birthday.strftime('%j').to_i - time_now.strftime('%j').to_i
+    output = `./cheers Abby 7/21`
     expected = <<EOS
 Give me an... A
 Give me a... B
@@ -127,7 +133,7 @@ Give me a... B
 Give me a... Y
 Abby’s just GRAND!
 
-Awesome! Your birthday is in 127 days! Happy Birthday in advance!
+Awesome! Your birthday is in #{difference} days! Happy Birthday in advance!
 EOS
     assert_equal expected, output
   end
@@ -137,7 +143,7 @@ EOS
   def test_two_valid_invalid_arguments
     output = `./cheers Abby !@234adsf`
     expected = <<EOS
-I couldn't understand that. Could you give that to me in mm/dd format next time?
+I couldn't understand that. Could you give that to me in MM/DD format next time?
 EOS
     assert_equal expected, output
   end
@@ -145,15 +151,10 @@ EOS
 #   * invalid + valid
 
   def test_two_invalid_valid_arguments
-    output = `./cheers Abby !@234adsf`
+    output = `./cheers !@234adsf 7/21`
     expected = <<EOS
-Give me an... A
-Give me a... B
-Give me a... B
-Give me a... Y
-Abby’s just GRAND!
-
-Awesome! Your birthday is in 127 days! Happy Birthday in advance!
+I'd cheer for you, if only I knew who you were :(
+Try again with `./cheers [Name] [MM/DD Birthday]
 EOS
     assert_equal expected, output
   end

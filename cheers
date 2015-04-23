@@ -8,6 +8,21 @@ EOS
   exit
 end
 
+def exit_due_to_invalid_birthday
+  puts <<EOS
+I couldn't understand that. Could you give that to me in MM/DD format next time?
+EOS
+  exit
+end
+
+def proper_format?(str)
+  month, day = str.split("/") 
+  unless (01..12).include?(month.to_i) and (01..31).include?(day.to_i)
+    exit_due_to_invalid_birthday
+  end
+  return true
+end
+
 
 exit_with_usage_instructions if ARGV.empty?
 
@@ -16,18 +31,31 @@ cheerable_name = original_name.upcase.gsub(/[^A-Z]/, "")
 
 exit_with_usage_instructions if cheerable_name.empty?
 
+birthday_input = ARGV[1]
+
+if birthday_input
+  proper_format?(birthday_input)
+end
+
 cheerable_name.each_char do |char|
   article = "n" if "HALFNORSEMIX".include?(char)
   puts "Give me a#{article}... #{char}"
 end
+
 puts "#{original_name}’s just GRAND!"
 puts ""
 
-birthday = ARGV[1]
 
-unless birthday
+unless birthday_input
   puts "I would wish you a Happy Birthday, if I knew when that was!"
   exit
 end
 
-puts "Awesome! Your birthday is in 127 days! Happy Birthday in advance!"
+
+
+time_now = Time.now
+month, day = birthday_input.split("/")
+birthday = Time.new(Time.now.year, month, day)
+difference = birthday.strftime('%j').to_i - time_now.strftime('%j').to_i
+
+puts "Awesome! Your birthday is in #{difference} days! Happy Birthday in advance!"
